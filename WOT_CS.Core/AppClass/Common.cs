@@ -122,6 +122,31 @@ namespace WOT_CS.Core.AppClass
             );
         }
 
+        public static bool IsExist(string TableName, string Value, string Filter)
+        {
+            string errmsg = "";
+            bool RetVal = false;
+            string strCode = "";
+            int fil = 0;
+            if (ConnectionFunctions.Connect_SQLScalar(ref fil, "select 1 from " + TableName + " where  " + Filter + "= '" + Value + "'", ref errmsg))
+            {
+                if (fil > 0)
+                {
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
     }
 }

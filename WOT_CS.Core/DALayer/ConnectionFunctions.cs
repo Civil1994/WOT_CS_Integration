@@ -789,7 +789,7 @@ namespace WOT_CS.Core.DALayer
                 }
                 catch (Exception ex)
                 {
-                    //errMsg = ex.Message;
+                    //string errorMessage = ex.Message;
                     //return false;
                 }
             }

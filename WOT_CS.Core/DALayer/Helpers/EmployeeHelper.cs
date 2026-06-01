@@ -146,16 +146,16 @@ namespace WOT_CS.Core.DALayer.Helpers
             { "@PersonnelNo", employee.PersonnelNo },
             { "@CheckInId", employee.CheckInId },
             { "@FirstName", employee.FirstName },
-            { "@LastName", employee.LastName },
-            { "@Agency", employee.Agency },
-            { "@Status", employee.Status },
-            { "@Department", employee.Department },
-            { "@RoleName", employee.RoleName },
-            { "@Title", employee.Title },
-            { "@JobBand", employee.JobBand },
-            { "@Casual", employee.Casual },
-            { "@StartDay", employee.StartDay },
-            { "@EndDay", employee.EndDay }
+            { "@LastName", (object)employee.LastName ?? DBNull.Value },
+            { "@Agency", (object)employee.Agency ?? DBNull.Value },
+            { "@Status", (object)employee.Status ?? DBNull.Value },
+            { "@Department", (object)employee.Department ?? DBNull.Value },
+            { "@RoleName", (object)employee.RoleName ?? DBNull.Value },
+            { "@Title", (object)employee.Title ?? DBNull.Value },
+            { "@JobBand", (object)employee.JobBand ?? DBNull.Value },
+            { "@Casual", (object)employee.Casual  ?? DBNull.Value },
+            { "@StartDay", (object)employee.StartDay  ?? DBNull.Value},
+            { "@EndDay", (object)employee.EndDay  ?? DBNull.Value}
         };
 
                 ConnectionFunctions.ExecuteScalar(insertQuery, parameters);

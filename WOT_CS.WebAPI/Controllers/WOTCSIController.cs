@@ -38,6 +38,22 @@ namespace WOT_CS.WebAPI.Controllers
         {
             try
             {
+
+                if (!string.IsNullOrEmpty(UniqueEmployeeId)) 
+                {
+                    bool exist = _objMain.IsExist("Employee", UniqueEmployeeId, "EmpCode");
+
+                    if (!exist)
+                    {
+                        return BadRequest(new
+                        {
+                            success = false,
+                            message = "Invalid EmployeeID",
+                            data = "Employee does not exist"
+                        });
+                    }
+                }
+
                 var list = _objMain.GetEmployeeDetails(UniqueEmployeeId, ModifiedBy, Status);
 
                 int totalRecords = list.Count;

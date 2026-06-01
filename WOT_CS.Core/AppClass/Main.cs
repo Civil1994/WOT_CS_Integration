@@ -71,7 +71,7 @@ namespace WOT_CS.Core.AppClass
 
         public List<EmployeeModel> GetEmployeeDetails(string UniqueEmployeeId = null, DateTime? ModifiedBy = null, string Status = null)
         {
-            int dboxiProcessId = 0;
+            int wotiProcessId = 0;
 
             List<EmployeeModel> emp =
                 new List<EmployeeModel>();
@@ -80,23 +80,23 @@ namespace WOT_CS.Core.AppClass
             {
                 Common.Log("INFO: GetEmployeeDetails Started");
 
-                dboxiProcessId =
+                wotiProcessId =
                     Common.CreateWOTProcessLogEntry( "Get Employee Details" );
 
                 emp = EmployeeHelper.GetEmployee(UniqueEmployeeId, ModifiedBy, Status);
                 foreach (var employee in emp)
                 {
-                    EmployeeHelper.AddWOTEmployeeData(employee, dboxiProcessId);
+                    EmployeeHelper.AddWOTEmployeeData(employee, wotiProcessId);
                 }
               
 
-                Common.UpdateWOTProcessLogEntry( dboxiProcessId, 0, "Employee fetched successfully" );
+                Common.UpdateWOTProcessLogEntry(wotiProcessId, 0, "Employee fetched successfully" );
 
                 Common.Log( "INFO: GetEmployeeDetails Completed" );
             }
             catch (Exception ex)
             {
-                Common.UpdateWOTProcessLogEntry( dboxiProcessId, 1, ex.Message);
+                Common.UpdateWOTProcessLogEntry(wotiProcessId, 1, ex.Message);
 
                 Common.Log(
                     "ERROR: GetEmployeeDetails " + ex.Message
@@ -106,7 +106,11 @@ namespace WOT_CS.Core.AppClass
             return emp;
         }
 
-
+        public bool IsExist(string TableName, string Value, string filter)
+        {
+            bool Exist = Common.IsExist(TableName, Value, filter);
+            return Exist;
+        }
 
     }
 }
