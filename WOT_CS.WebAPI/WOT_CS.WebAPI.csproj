@@ -22,4 +22,8 @@
     <ProjectReference Include="..\WOT_CS.Core\WOT_CS.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include=".github\workflows\build.yml" />
+  </ItemGroup>
+
 </Project>
