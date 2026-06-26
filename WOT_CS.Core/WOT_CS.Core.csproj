@@ -124,9 +124,6 @@
     <Compile Include="AppClass\TranslationHelper.cs" />
     <Compile Include="AppClass\TranslationHelperV2.cs" />
     <Compile Include="AppClass\workflow.cs" />
-    <Compile Include="BL\EmployeeImportBL.cs" />
-    <Compile Include="BL\EmployeeStagingBL.cs" />
-    <Compile Include="BL\WorkAgreementImportBL.cs" />
     <Compile Include="Configuration\AppSettings.cs" />
     <Compile Include="Configuration\IAppSettings.cs" />
     <Compile Include="DALayer\BusinessRules.cs" />
@@ -151,7 +148,6 @@
     <Compile Include="HCMS.Entity\FinReqMast.cs" />
     <Compile Include="HCMS.Entity\SecRights.cs" />
     <Compile Include="HCMS.Entity\WrkAgrmntDet.cs" />
-    <Compile Include="Models\EmpExitInboundModel.cs" />
     <Compile Include="Models\EmployeeModel.cs" />
     <Compile Include="Models\UFAPIResponse.cs" />
     <Compile Include="Properties\AppResources.Designer.cs">
@@ -175,6 +171,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BL\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

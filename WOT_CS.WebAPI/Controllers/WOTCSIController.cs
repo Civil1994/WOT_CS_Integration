@@ -32,7 +32,7 @@ namespace WOT_CS.WebAPI.Controllers
 
       
         [HttpGet("GetEmployee")]
-        public IActionResult GetEmployee(string UniqueEmployeeId=null,DateTime? ModifiedBy=null,string Status=null,
+        public IActionResult GetEmployee(string UniqueEmployeeId=null,DateTime? ModifiedDate=null,string Status=null,
         int page = 1,
         int pageSize = 50)
         {
@@ -54,7 +54,7 @@ namespace WOT_CS.WebAPI.Controllers
                     }
                 }
 
-                var list = _objMain.GetEmployeeDetails(UniqueEmployeeId, ModifiedBy, Status);
+                var list = _objMain.GetEmployeeDetails(UniqueEmployeeId, ModifiedDate, Status);
 
                 int totalRecords = list.Count;
 
