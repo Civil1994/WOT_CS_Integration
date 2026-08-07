@@ -7,8 +7,8 @@
     <ProjectGuid>{2B236854-87AE-4C41-8FCD-D38AF8440A16}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DBox_CS.Core</RootNamespace>
-    <AssemblyName>DBox_CS.Core</AssemblyName>
+    <RootNamespace>WOT_CS.Core</RootNamespace>
+    <AssemblyName>WOT_CS.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

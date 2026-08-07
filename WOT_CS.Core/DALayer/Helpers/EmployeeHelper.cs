@@ -27,6 +27,8 @@ namespace WOT_CS.Core.DALayer.Helpers
 
                 string sqry = "WOT_CSI_GetEmployee";
 
+
+
                 SqlCommand myCmd = new SqlCommand(sqry, myConn);
 
                 myCmd.CommandType = CommandType.StoredProcedure;
@@ -101,6 +103,13 @@ namespace WOT_CS.Core.DALayer.Helpers
                                 oEmployee.EndDay =
                                     Convert.ToDateTime(dataReader["EndDay"]);
 
+                            if (!dataReader.IsDBNull(dataReader.GetOrdinal("Division")))
+                                oEmployee.Division =
+                                    dataReader["Division"].ToString();
+
+                            if (!dataReader.IsDBNull(dataReader.GetOrdinal("WorkingPlace")))
+                                oEmployee.WorkingPlace =
+                                    dataReader["WorkingPlace"].ToString();
                             // ADD TO LIST
                             employees.Add(oEmployee);
                         }

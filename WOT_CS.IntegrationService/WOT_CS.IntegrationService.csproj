@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C537430F-5612-40BA-B83C-AF321C3B0B24}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>DBox_CS.IntegrationService</RootNamespace>
-    <AssemblyName>DBox_CS.IntegrationService</AssemblyName>
+    <RootNamespace>WOT_CS.IntegrationService</RootNamespace>
+    <AssemblyName>WOT_CS.IntegrationService</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

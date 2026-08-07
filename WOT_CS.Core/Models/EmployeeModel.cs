@@ -21,5 +21,8 @@ namespace WOT_CS.Core.Models
         public string Casual { get; set; }
         public DateTime? StartDay { get; set; }
         public DateTime? EndDay { get; set; }
+        public string Division { get; set; }
+
+        public string WorkingPlace { get; set; }
     }
 }
