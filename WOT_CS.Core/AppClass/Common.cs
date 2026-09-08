@@ -41,7 +41,7 @@ namespace WOT_CS.Core.AppClass
             try
             {
 
-                Log("INFO: CreateWOTProcessLogEntry Started");
+                Log("INFO: CreateWOTProcessLogEntry Started"); 
 
 
                 string errorQuery = " INSERT INTO WOTProcessLog ([ProcessName],[StartTime]) VALUES (@ProcessName, GETDATE());    ";
