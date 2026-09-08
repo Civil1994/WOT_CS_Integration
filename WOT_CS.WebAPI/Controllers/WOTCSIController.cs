@@ -87,6 +87,105 @@ namespace WOT_CS.WebAPI.Controllers
             }
         }
 
-      
+        [HttpPost("SaveShiftPlanning")]
+            public IActionResult SaveShiftPlanning([FromBody] List<ShiftPlanningModel> planningmodel)
+        {
+            if (planningmodel == null || planningmodel.Count == 0)
+            {
+                var error = new Response
+                {
+                    Status = 0,
+                    Message = "Shift planning data is required.",
+                    Data = new ResponseData
+                    {
+                        ErrorData = { "Shift planning data cannot be empty." }
+                    }
+                };
+
+                return BadRequest(error);
+            }
+
+            // Validate every record
+            foreach (var item in planningmodel)
+            {
+                if (string.IsNullOrWhiteSpace(item.EmpCode))
+                {
+                    var error = new Response
+                    {
+                        Status = 0,
+                        Message = "employee_code is required.",
+                        Data = new ResponseData
+                        {
+                            ErrorData = { "employee_code cannot be empty." }
+                        }
+                    };
+
+                    return BadRequest(error);
+                }
+            }
+
+
+            try
+            {
+                string responseMsg = "Shift Planning Saved Successfully.";
+                ResponseData rd = new ResponseData();
+                int sts = 1;
+                int wotiProcessId = 0;
+
+                _objMain.SaveShiftPlanning(planningmodel, out wotiProcessId);
+
+                if (wotiProcessId != 0)
+                {
+                    DataTable dtlog = _objMain.GetProcessLog(wotiProcessId);
+                    DataTable dterrors = _objMain.GetProcessError(wotiProcessId);
+
+                    if (dtlog.Rows.Count > 0)
+                    {
+                        responseMsg = dtlog.Rows[0]["Remarks"].ToString();
+                    }
+                  
+
+                    if (dterrors.Rows.Count > 0)
+                    {
+                        foreach (DataRow drow in dterrors.Rows)
+                        {
+                            rd.ErrorData.Add(drow["ErrorText"].ToString());
+                        }
+                    }
+                }
+
+
+                //Verify Data.
+                var success = new Response
+                {
+                    Status = sts,
+                    Message = responseMsg,
+                    Data = rd
+                };
+
+                return Ok(success);
+            }
+            catch (ManualException ex)
+            {
+                var error = new Response
+                {
+                    Status = 0,
+                    Message = "Error saving Shift Planning",
+                    Data = new ResponseData { ErrorData = { string.IsNullOrEmpty(ex.Message) ? "internal server error" : ex.Message } }
+                };
+                return StatusCode(500, error);
+            }
+            catch (Exception ex)
+            {
+                var error = new Response
+                {
+                    Status = 0,
+                    Message = "Error Shift Planning",
+                    Data = new ResponseData { ErrorData = { "unhandled error occured" } }
+                };
+                return StatusCode(500, error);
+            }
+        }
+          
     }
 }

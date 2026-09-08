@@ -121,7 +121,29 @@ namespace WOT_CS.Core.AppClass
                 $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - {message}{Environment.NewLine}"
             );
         }
+        public static void LogWOTErrorLog(int processid,  string empCode, string errorInfo, string errorText)
+        {
+            string errorQuery = @"
+        INSERT INTO WOTErrorLog (WOTProcessId,  EmpCode, ErrInfo, ErrorText, LoggedDate)
+        VALUES (@WOTProcessId, @EmpCode,@ErrInfo, @ErrorText, GETDATE());
+    ";
 
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+    {
+        { "@WOTProcessId", processid },
+        { "@EmpCode", empCode },
+        { "@ErrInfo", errorInfo },
+        { "@ErrorText", errorText }
+    };
+
+            string errorMsg = string.Empty;
+            bool result = ConnectionFunctions.ExecuteQuery(errorQuery, parameters, ref errorMsg);
+
+            if (!result)
+            {
+                Common.Log($"Failed to log error to WOTErrorLog. Details: {errorMsg}");
+            }
+        }
         public static bool IsExist(string TableName, string Value, string Filter)
         {
             string errmsg = "";
@@ -147,6 +169,35 @@ namespace WOT_CS.Core.AppClass
             }
         }
 
+        public static DataTable GetProcessError(int wotiProcessId)
+        {
+            string errmsg = "";
+            bool RetVal = false;
+            DataTable dt = new DataTable();
+            if (ConnectionFunctions.Connect_SQLDataTable(ref dt, "select * from WOTErrorLog where  WOTProcessId=" + wotiProcessId, ref errmsg))
+            {
+                return dt;
+            }
+            else
+            {
+                return null;
+            }
 
+        }
+        public static DataTable GetProcessLog(int wotiProcessId)
+        {
+            string errmsg = "";
+            bool RetVal = false;
+            DataTable dt = new DataTable();
+            if (ConnectionFunctions.Connect_SQLDataTable(ref dt, "select * from WOTProcessLog where  WOTProcessId=" + wotiProcessId, ref errmsg))
+            {
+                return dt;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
     }
 }
