@@ -136,6 +136,7 @@
     <Compile Include="DALayer\Helpers\EOSTranHelper.cs" />
     <Compile Include="DALayer\Helpers\FinChangesHelper.cs" />
     <Compile Include="DALayer\Helpers\FinReqMastHelper.cs" />
+    <Compile Include="DALayer\Helpers\PlanningHelper.cs" />
     <Compile Include="Enums\ImportProcessStatus.cs" />
     <Compile Include="HCMS.Entity\ApprProcess.cs" />
     <Compile Include="HCMS.Entity\AuditTrail.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="HCMS.Entity\SecRights.cs" />
     <Compile Include="HCMS.Entity\WrkAgrmntDet.cs" />
     <Compile Include="Models\EmployeeModel.cs" />
+    <Compile Include="Models\ShiftPlanningModel.cs" />
     <Compile Include="Models\UFAPIResponse.cs" />
     <Compile Include="Properties\AppResources.Designer.cs">
       <AutoGen>True</AutoGen>

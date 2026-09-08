@@ -105,12 +105,48 @@ namespace WOT_CS.Core.AppClass
 
             return emp;
         }
+        public void SaveShiftPlanning( List<ShiftPlanningModel> planningmodel, out int wotiProcessId)
+        {
+            wotiProcessId = 0;
+          
+       
+            try
+            {
+                Common.Log("INFO: SaveShiftPlanning Started");
 
+                wotiProcessId =
+                    Common.CreateWOTProcessLogEntry("Save Shift Planning Details");
+
+
+                PlanningHelper.AddWOTShiftPlanning(planningmodel, wotiProcessId);
+                Common.UpdateWOTProcessLogEntry(wotiProcessId, 0, "Shift Planning Posted successfully");
+
+                Common.Log("INFO: SaveShiftPlanning Completed");
+            }
+            catch (Exception ex)
+            {
+                Common.UpdateWOTProcessLogEntry(wotiProcessId, 1, ex.Message);
+
+                Common.Log(
+                    "ERROR: SaveShiftPlanning " + ex.Message
+                );
+                Common.LogWOTErrorLog(wotiProcessId, "", "SaveShiftPlanning trycatch block", ex.Message);
+                throw;
+            }
+        }
         public bool IsExist(string TableName, string Value, string filter)
         {
             bool Exist = Common.IsExist(TableName, Value, filter);
             return Exist;
         }
 
+        public DataTable GetProcessError(int wotiProcessId)
+        {
+            return Common.GetProcessError(wotiProcessId);
+        }
+        public DataTable GetProcessLog(int wotiProcessId)
+        {
+            return Common.GetProcessLog(wotiProcessId);
+        }
     }
 }
