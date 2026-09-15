@@ -62,7 +62,7 @@ namespace WOT_CS.Core.AppClass
                 {
                     wotProcessId = Convert.ToInt32(result);
                 }
-                Log("INFO:dboxiprocessid" + wotProcessId);
+                Log("INFO:wotProcessId" + wotProcessId);
             }
             catch (Exception ex)
             {
