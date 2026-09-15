@@ -133,13 +133,48 @@ namespace WOT_CS.Core.AppClass
                 Common.LogWOTErrorLog(wotiProcessId, "", "SaveShiftPlanning trycatch block", ex.Message);
                 throw;
             }
+
+        }
+
+        public List<ShiftPlanningDetailsModel> GetShiftPlanningDetails(int  EmployeeId , DateTime? EffectiveDate = null, string Status = null)
+        {
+            int wotiProcessId = 0;
+            List<ShiftPlanningDetailsModel> shift = new List<ShiftPlanningDetailsModel>();
+
+            try
+            {
+                Common.Log("INFO: GetShiftPlanningDetails Started");
+
+                wotiProcessId =
+                    Common.CreateWOTProcessLogEntry("Shift Planning Details Started");
+                
+                shift = PlanningHelper.GetShiftPlanningDetails(EmployeeId, EffectiveDate, Status, wotiProcessId);
+                Common.UpdateWOTProcessLogEntry(wotiProcessId, 0, "Shift Planning Details Fetched successfully");
+
+                Common.Log("INFO: GetShiftPlanningDetails Completed");
+            }
+            catch (Exception ex)
+            {
+                Common.UpdateWOTProcessLogEntry(wotiProcessId, 1, ex.Message);
+
+                Common.Log(
+                    "ERROR: SaveShiftPlanning " + ex.Message
+                );
+                Common.LogWOTErrorLog(wotiProcessId, "", "SaveShiftPlanning trycatch block", ex.Message);
+                throw;
+            }
+            return shift;
         }
         public bool IsExist(string TableName, string Value, string filter)
         {
             bool Exist = Common.IsExist(TableName, Value, filter);
             return Exist;
         }
-
+        public int  GetId(string TableName, string ColumnName, string Value, string Filter)
+        {
+            int  Result = Common.GetId(TableName, ColumnName, Value, Filter);
+            return Result;
+        }
         public DataTable GetProcessError(int wotiProcessId)
         {
             return Common.GetProcessError(wotiProcessId);

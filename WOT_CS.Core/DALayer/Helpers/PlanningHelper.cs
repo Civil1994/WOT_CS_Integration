@@ -269,6 +269,102 @@ namespace WOT_CS.Core.DALayer.Helpers
                 throw;
             }
         }
+        public static List<ShiftPlanningDetailsModel> GetShiftPlanningDetails(int EmployeeId , DateTime? EffectiveDate = null, string Status = null,int wotProcessId=0)
+        {
+            SqlConnection myConn = new SqlConnection();
+            myConn.ConnectionString = ConnectionFunctions.GetConnectionString();
 
+            List<ShiftPlanningDetailsModel> shifts =
+                new List<ShiftPlanningDetailsModel>();
+            Common.Log("INFO: GetShiftPlanningDetails Started");
+            try
+            {
+                myConn.Open();
+
+                string sqry = "WOT_CSI_GetEmployeeShiftPlanning";
+
+
+
+                SqlCommand myCmd = new SqlCommand(sqry, myConn);
+
+                myCmd.CommandType = CommandType.StoredProcedure;
+                myCmd.Parameters.AddWithValue("@EmpID",
+                EmployeeId == 0 ? (object)DBNull.Value : EmployeeId);
+
+                myCmd.Parameters.AddWithValue("@EffectiveDate",
+                    (object)EffectiveDate ?? DBNull.Value);
+
+                myCmd.Parameters.AddWithValue("@Status",
+                    (object)Status ?? DBNull.Value);
+
+
+                using (SqlDataReader dataReader = myCmd.ExecuteReader())
+                {
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            ShiftPlanningDetailsModel shiftdetails =
+                              new ShiftPlanningDetailsModel();
+
+                            if (!dataReader.IsDBNull(dataReader.GetOrdinal("EmpCode")))
+                                shiftdetails.EmpCode =
+                                    dataReader["EmpCode"].ToString();
+
+                            if (!dataReader.IsDBNull(dataReader.GetOrdinal("EffectiveDate")))
+                            {
+                                shiftdetails.EffectiveDate =
+                                    Convert.ToDateTime(dataReader["EffectiveDate"])
+                                        .ToString("yyyy-MM-dd");
+                            }
+
+                            if (!dataReader.IsDBNull(dataReader.GetOrdinal("ExpectedTimeIn1")))
+                                shiftdetails.ExpectedTimeIn1 =
+                                    dataReader["ExpectedTimeIn1"].ToString();
+
+                            if (!dataReader.IsDBNull(dataReader.GetOrdinal("ExpectedTimeOut1")))
+                                shiftdetails.ExpectedTimeOut1 =
+                                    dataReader["ExpectedTimeOut1"].ToString();
+
+                            if (!dataReader.IsDBNull(dataReader.GetOrdinal("ExpectedTimeIn2")))
+                                shiftdetails.ExpectedTimeIn2 =
+                                    dataReader["ExpectedTimeIn2"].ToString();
+
+                            if (!dataReader.IsDBNull(dataReader.GetOrdinal("ExpectedTimeOut2")))
+                                shiftdetails.ExpectedTimeOut2 =
+                                    dataReader["ExpectedTimeOut2"].ToString();
+
+                            if (!dataReader.IsDBNull(dataReader.GetOrdinal("OFFDays")))
+                                shiftdetails.OFFDays =
+                                    dataReader["OFFDays"].ToString();
+
+                            shifts.Add(shiftdetails);
+                        }
+                    }
+                }
+
+                Common.Log(
+                    "INFO: Shift Planning data fetched successfully. " +
+                    "Records: " + shifts.Count);
+            }
+            catch (Exception ex)
+            {
+                Common.Log(
+                    "ERROR: GetShiftPlanningDetails - " +
+                    ex.Message +
+                    Environment.NewLine +
+                    ex.StackTrace);
+                Common.LogWOTErrorLog(wotProcessId, "", "GetShiftPlanningDetails trycatch block", ex.Message);
+                throw;
+            }
+            finally
+            {
+                if (myConn.State != ConnectionState.Closed)
+                    myConn.Close();
+                Common.Log("INFO: GetShiftPlanningDetails Completed");
+            }
+
+            return shifts;
+        }
     }
 }

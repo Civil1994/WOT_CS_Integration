@@ -37,11 +37,11 @@ namespace WOT_CS.Core.AppClass
         public static Hashtable ModulesTable;
         internal static int CreateWOTProcessLogEntry(string processName)
         {
-            int dboxiprocessid = 0;
+            int wotProcessId = 0;
             try
             {
 
-                Log("INFO: CreateWOTProcessLogEntry Started"); 
+                Log("INFO: CreateWOTProcessLogEntry Started" + processName); 
 
 
                 string errorQuery = " INSERT INTO WOTProcessLog ([ProcessName],[StartTime]) VALUES (@ProcessName, GETDATE());    ";
@@ -53,11 +53,16 @@ namespace WOT_CS.Core.AppClass
 
                 string errorMsg = string.Empty;
                 object result = ConnectionFunctions.ExecuteScalar(errorQuery, parameters);
-
+                //object result = ConnectionFunctions.ExecuteQuery(
+                 //errorQuery,
+                 //parameters,
+                 //ref errorMsg
+             //);
                 if (result != null)
                 {
-                    dboxiprocessid = Convert.ToInt32(result);
+                    wotProcessId = Convert.ToInt32(result);
                 }
+                Log("INFO:dboxiprocessid" + wotProcessId);
             }
             catch (Exception ex)
             {
@@ -65,7 +70,7 @@ namespace WOT_CS.Core.AppClass
                     "ERROR: CreateWOTProcessLogEntry " + ex.Message
                 );
             }
-            return dboxiprocessid;
+            return wotProcessId;
 
 
         }
@@ -199,5 +204,26 @@ namespace WOT_CS.Core.AppClass
             }
 
         }
+
+        public static int GetId( string TableName, string ColumnName, string Value, string Filter)
+        {
+            string errmsg = "";
+            int result = 0;
+
+            string sql = "SELECT " + ColumnName +
+                         " FROM " + TableName +
+                         " WHERE " + Filter + " = '" + Value + "'";
+
+            if (ConnectionFunctions.Connect_SQLScalar(
+                ref result,
+                sql,
+                ref errmsg))
+            {
+                return result;
+            }
+
+            return 0;
+        }
+
     }
 }

@@ -26,4 +26,27 @@ namespace WOT_CS.Core.Models
         [DataMember(Name = "EndTime2")]
         public string EndTime2 { get; set; }
     }
+    public class ShiftPlanningDetailsModel
+    {
+        [DataMember(Name = "EmpCode")]
+        public string EmpCode { get; set; }
+
+        [DataMember(Name = "EffectiveDate")]
+        public string EffectiveDate { get; set; }
+
+        [DataMember(Name = "ExpectedTimeIn1")]
+        public string ExpectedTimeIn1 { get; set; }
+
+        [DataMember(Name = "ExpectedTimeOut1")]
+        public string ExpectedTimeOut1 { get; set; }
+
+        [DataMember(Name = "ExpectedTimeIn2")]
+        public string ExpectedTimeIn2 { get; set; }
+
+        [DataMember(Name = "ExpectedTimeOut2")]
+        public string ExpectedTimeOut2 { get; set; }
+
+        [DataMember(Name = "OFFDays")]
+        public string OFFDays { get; set; }
+    }
 }

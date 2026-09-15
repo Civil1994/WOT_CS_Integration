@@ -12,7 +12,6 @@ using System.Data;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-using WOT_CS.Core.BL;
 using System.Configuration;
 using Starksoft.Aspen.GnuPG;
 using FluentFTP;

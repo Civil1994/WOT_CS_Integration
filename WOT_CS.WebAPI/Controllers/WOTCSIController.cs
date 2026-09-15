@@ -52,6 +52,7 @@ namespace WOT_CS.WebAPI.Controllers
                             data = "Employee does not exist"
                         });
                     }
+
                 }
 
                 var list = _objMain.GetEmployeeDetails(UniqueEmployeeId, ModifiedDate, Status);
@@ -186,6 +187,69 @@ namespace WOT_CS.WebAPI.Controllers
                 return StatusCode(500, error);
             }
         }
-          
+
+
+        [HttpGet("GetShiftPlanning")]
+        public IActionResult GetShiftPlanning(string EmployeeId = null, DateTime? EffectiveDate = null, string Status = null,
+        int page = 1,
+        int pageSize = 50)
+        {
+            try
+            {
+                int EmpID = 0;
+
+                if (!string.IsNullOrEmpty(EmployeeId))
+                {
+                    bool exist = _objMain.IsExist("Employee", EmployeeId, "EmpCode");
+
+                    if (!exist)
+                    {
+                        return BadRequest(new
+                        {
+                            success = false,
+                            message = "Invalid EmployeeID",
+                            data = "Employee does not exist"
+                        });
+                    }
+                    else
+                    {
+                        EmpID = _objMain.GetId("Employee","EmpID", EmployeeId, "EmpCode");
+
+
+                    }
+                }
+
+                var list = _objMain.GetShiftPlanningDetails(EmpID, EffectiveDate, Status);
+
+                int totalRecords = list.Count;
+
+                var pagedData = list
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+                return Ok(new
+                {
+                    success = true,
+                    page,
+                    pageSize,
+                    totalRecords,
+                    totalPages = (int)Math.Ceiling(
+                        (double)totalRecords / pageSize
+                    ),
+                    data = pagedData
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "GetShiftPlanningDetails failed");
+
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = ex.Message
+                });
+            }
+        }
     }
 }
