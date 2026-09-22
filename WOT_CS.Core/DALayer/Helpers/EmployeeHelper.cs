@@ -110,6 +110,9 @@ namespace WOT_CS.Core.DALayer.Helpers
                             if (!dataReader.IsDBNull(dataReader.GetOrdinal("WorkingPlace")))
                                 oEmployee.WorkingPlace =
                                     dataReader["WorkingPlace"].ToString();
+                            if (!dataReader.IsDBNull(dataReader.GetOrdinal("AuxString1")))
+                                oEmployee.MerlinID =
+                                    dataReader["AuxString1"].ToString();
                             // ADD TO LIST
                             employees.Add(oEmployee);
                         }
@@ -120,6 +123,7 @@ namespace WOT_CS.Core.DALayer.Helpers
             {
                 Common.Log(
                    "ERROR: GetEmployee " + ex.Message);
+                throw;
             }
             finally
             {
@@ -178,5 +182,7 @@ namespace WOT_CS.Core.DALayer.Helpers
 
           
         }
+
+    
     }
 }

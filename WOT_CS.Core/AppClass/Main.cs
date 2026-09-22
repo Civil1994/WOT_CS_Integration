@@ -101,6 +101,7 @@ namespace WOT_CS.Core.AppClass
                 Common.Log(
                     "ERROR: GetEmployeeDetails " + ex.Message
                 );
+                throw;
             }
 
             return emp;

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WOT_CS.Core.AppClass;
+using System.Globalization;
 
 namespace WOT_CS.Core.DALayer.Helpers
 {
@@ -52,7 +53,7 @@ namespace WOT_CS.Core.DALayer.Helpers
 
 
         }
-
+      
         public static void AddWOTShiftPlanninge(List<ShiftPlanningModel> planningList,int wotiprocessid)
         {
             try
@@ -311,11 +312,18 @@ namespace WOT_CS.Core.DALayer.Helpers
                                 shiftdetails.EmpCode =
                                     dataReader["EmpCode"].ToString();
 
+                          
                             if (!dataReader.IsDBNull(dataReader.GetOrdinal("EffectiveDate")))
                             {
+                                DateTime effectiveDate =
+                                    Convert.ToDateTime(dataReader["EffectiveDate"]);
+
                                 shiftdetails.EffectiveDate =
-                                    Convert.ToDateTime(dataReader["EffectiveDate"])
-                                        .ToString("yyyy-MM-dd");
+                                    effectiveDate.ToString("yyyy-MM-dd");
+                            }
+                            else
+                            {
+                                shiftdetails.EffectiveDate = "";
                             }
 
                             if (!dataReader.IsDBNull(dataReader.GetOrdinal("ExpectedTimeIn1")))

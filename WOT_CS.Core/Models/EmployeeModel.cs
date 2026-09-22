@@ -24,5 +24,6 @@ namespace WOT_CS.Core.Models
         public string Division { get; set; }
 
         public string WorkingPlace { get; set; }
+        public string MerlinID { get; set; } = "";
     }
 }

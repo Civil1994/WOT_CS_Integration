@@ -79,12 +79,12 @@ namespace WOT_CS.WebAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "GetEmployee failed");
-
-                return StatusCode(500, new
-                {
-                    success = false,
-                    message = ex.Message
-                });
+                return InternalServerError(ex.Message,"Error while getting Employee Details");
+                //return StatusCode(500, new
+                //{
+                //    success = false,
+                //    message = ex.Message
+                //});
             }
         }
 
@@ -243,13 +243,23 @@ namespace WOT_CS.WebAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "GetShiftPlanningDetails failed");
-
-                return StatusCode(500, new
-                {
-                    success = false,
-                    message = ex.Message
-                });
+                return InternalServerError(ex.Message,"Error while getting shift planning Details.");
+             
             }
         }
+
+        private IActionResult InternalServerError(string message,string data)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new Response
+            {
+                Status = 0,
+                Message = message,
+                Data = new ResponseData
+                {
+                    ErrorData = { data }
+                }
+            });
+        }
+
     }
 }
