@@ -103,6 +103,14 @@ namespace WOT_CS.Core.DALayer.Helpers
                                 oEmployee.EndDay =
                                     Convert.ToDateTime(dataReader["EndDay"]);
 
+                            if (!dataReader.IsDBNull(dataReader.GetOrdinal("ProbationEndDate")))
+                                oEmployee.ProbationEndDate =
+                                    Convert.ToDateTime(dataReader["ProbationEndDate"]);
+
+                            if (!dataReader.IsDBNull(dataReader.GetOrdinal("AllDays")))
+                                oEmployee.AllDays =
+                                    dataReader["AllDays"].ToString();
+
                             if (!dataReader.IsDBNull(dataReader.GetOrdinal("Division")))
                                 oEmployee.Division =
                                     dataReader["Division"].ToString();
