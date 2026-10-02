@@ -23,7 +23,7 @@ namespace WOT_CS.Core.Models
         public DateTime? EndDay { get; set; }
 
         public DateTime? ProbationEndDate { get; set; }
-        public string AllDays { get; set; } = "";
+        public string ALDays { get; set; } = "";
         public string Division { get; set; } = "";
 
         public string WorkingPlace { get; set; } = "";

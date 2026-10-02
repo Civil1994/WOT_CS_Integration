@@ -13,7 +13,7 @@ namespace WOT_CS.Core.DALayer.Helpers
     public class EmployeeHelper
     {
 
-        public static List<EmployeeModel> GetEmployee(string UniqueEmployeeId = null, DateTime? ModifiedBy = null, string Status = null)
+        public static List<EmployeeModel> GetEmployee(string UniqueEmployeeId = null, string HolidexCode = null, DateTime? ModifiedBy = null, string Status = null)
         {
             SqlConnection myConn = new SqlConnection();
             myConn.ConnectionString = ConnectionFunctions.GetConnectionString();
@@ -34,6 +34,9 @@ namespace WOT_CS.Core.DALayer.Helpers
                 myCmd.CommandType = CommandType.StoredProcedure;
                 myCmd.Parameters.AddWithValue("@UniqueEmployeeId",
                     (object)UniqueEmployeeId ?? DBNull.Value);
+
+                myCmd.Parameters.AddWithValue("@HolidexCode",
+                 (object)HolidexCode ?? DBNull.Value);
 
                 myCmd.Parameters.AddWithValue("@ModifiedBy",
                     (object)ModifiedBy ?? DBNull.Value);
@@ -107,9 +110,9 @@ namespace WOT_CS.Core.DALayer.Helpers
                                 oEmployee.ProbationEndDate =
                                     Convert.ToDateTime(dataReader["ProbationEndDate"]);
 
-                            if (!dataReader.IsDBNull(dataReader.GetOrdinal("AllDays")))
-                                oEmployee.AllDays =
-                                    dataReader["AllDays"].ToString();
+                            if (!dataReader.IsDBNull(dataReader.GetOrdinal("ALDays")))
+                                oEmployee.ALDays =
+                                    dataReader["ALDays"].ToString();
 
                             if (!dataReader.IsDBNull(dataReader.GetOrdinal("Division")))
                                 oEmployee.Division =

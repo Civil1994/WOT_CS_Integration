@@ -69,7 +69,7 @@ namespace WOT_CS.Core.AppClass
 
         
 
-        public List<EmployeeModel> GetEmployeeDetails(string UniqueEmployeeId = null, DateTime? ModifiedBy = null, string Status = null)
+        public List<EmployeeModel> GetEmployeeDetails(string UniqueEmployeeId = null, string HolidexCode = null, DateTime? ModifiedBy = null, string Status = null)
         {
             int wotiProcessId = 0;
 
@@ -83,7 +83,7 @@ namespace WOT_CS.Core.AppClass
                 wotiProcessId =
                     Common.CreateWOTProcessLogEntry( "Get Employee Details" );
 
-                emp = EmployeeHelper.GetEmployee(UniqueEmployeeId, ModifiedBy, Status);
+                emp = EmployeeHelper.GetEmployee(UniqueEmployeeId, HolidexCode, ModifiedBy, Status);
                 foreach (var employee in emp)
                 {
                     EmployeeHelper.AddWOTEmployeeData(employee, wotiProcessId);

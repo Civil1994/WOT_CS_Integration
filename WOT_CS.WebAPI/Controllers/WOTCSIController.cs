@@ -32,7 +32,7 @@ namespace WOT_CS.WebAPI.Controllers
 
       
         [HttpGet("GetEmployee")]
-        public IActionResult GetEmployee(string UniqueEmployeeId=null,DateTime? ModifiedDate=null,string Status=null,
+        public IActionResult GetEmployee(string UniqueEmployeeId=null,string HolidexCode=null,DateTime? ModifiedDate=null,string Status=null,
         int page = 1,
         int pageSize = 50)
         {
@@ -54,8 +54,22 @@ namespace WOT_CS.WebAPI.Controllers
                     }
 
                 }
+                if (!string.IsNullOrEmpty(HolidexCode))
+                {
+                    bool exist = _objMain.IsExist("TP_HolidexCo", HolidexCode, "HolidexCode");
 
-                var list = _objMain.GetEmployeeDetails(UniqueEmployeeId, ModifiedDate, Status);
+                    if (!exist)
+                    {
+                        return BadRequest(new
+                        {
+                            success = false,
+                            message = "Invalid HolidexCode",
+                            data = "HolidexCode does not exist"
+                        });
+                    }
+
+                }
+                var list = _objMain.GetEmployeeDetails(UniqueEmployeeId, HolidexCode, ModifiedDate, Status);
 
                 int totalRecords = list.Count;
 
